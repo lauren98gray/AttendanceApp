@@ -14,7 +14,7 @@ public class Main {
         String name = sc.nextLine();
         System.out.println("Welcome, " + name + "!");
 
-        // Make ArrayList of absences
+        // Make & output ArrayList of absences
         ArrayList<Integer> absences = new ArrayList<>();
         Random rand = new Random();
         for (int i=0; i < name.length(); i++){
@@ -22,6 +22,17 @@ public class Main {
             absences.add(num);
         }
         System.out.println("The elements are " + absences);
+
+        // Number of students with perfect attendance
+        int perfAttend = 0;
+        for (int i=0; i < absences.size(); i++){
+            if (absences.get(i) == 0) {
+                perfAttend++;
+            }
+        }
+        System.out.println(perfAttend + " students had perfect attendance.");
+
+
 
 
     }
