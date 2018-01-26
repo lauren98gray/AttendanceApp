@@ -17,7 +17,7 @@ public class Main {
         // Make & output ArrayList of absences
         ArrayList<Integer> absences = new ArrayList<>();
         Random rand = new Random();
-        for (int i=0; i < name.length(); i++){
+        for (int i = 0; i < name.length(); i++) {
             int num = rand.nextInt(11);
             absences.add(num);
         }
@@ -40,19 +40,36 @@ public class Main {
         int numAbsences = sc.nextInt();
         ArrayList<Integer> indexAbsence = new ArrayList<>();
         for (int i = 0; i < absences.size(); i++) {
-            if (absences.get(i) == numAbsences){
+            if (absences.get(i) == numAbsences) {
                 indexAbsence.add(i);
             }
-            if (!indexAbsence.isEmpty()){
-                System.out.println("The students at indices " + indexAbsence + " had " + numAbsences + " absences.");
-            }else{
-                System.out.println("No students have " + numAbsences + " absences.");
-            }
+        }
+        if (!indexAbsence.isEmpty()) {
+            System.out.println("The students at indices " + indexAbsence + " had " + numAbsences + " absences.");
+        } else {
+            System.out.println("No students have " + numAbsences + " absences.");
         }
 
 
+        // Which and what percentage of students have FE'd the course
+            System.out.print("How many times per week does this course meet? ");
+            double numFE = sc.nextInt() * 2;
+            ArrayList<Integer> indexFE = new ArrayList<>();
+            for (int i = 0; i<absences.size();i++) {
+        if (absences.get(i) >= numFE) {
+            indexFE.add(i);
+        }
+    }
+        if(indexFE.size()>0) {
+        System.out.println("The index(es) of the student(s) who have FE'd this course are: " + indexFE);
+        double percentFE = (numFE / absences.size()) * 100.0;
+        //System.out.printf("Formatted %d divided by %d is %.2f%%", indexFE.size(), absences.size(), percentFE);
+        System.out.println(percentFE + "% of students have FE'd this course.");
 
     }
+}
+
+
 
     // function that counts how many students have perfect attendance
     private static double perfAttend(ArrayList<Integer> absences) {
