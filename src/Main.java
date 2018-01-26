@@ -35,6 +35,21 @@ public class Main {
         // % of students with fewer than 3 absences & perfect attendance
         System.out.println(percent(absences) + "% of students who had fewer than 3 absences also had perfect attendance.");
 
+        // students that had [X] absences
+        System.out.print("Enter the number of absences you'd like to check: ");
+        int numAbsences = sc.nextInt();
+        ArrayList<Integer> indexAbsence = new ArrayList<>();
+        for (int i = 0; i < absences.size(); i++) {
+            if (absences.get(i) == numAbsences){
+                indexAbsence.add(i);
+            }
+            if (!indexAbsence.isEmpty()){
+                System.out.println("The students at indices " + indexAbsence + " had " + numAbsences + " absences.");
+            }else{
+                System.out.println("No students have " + numAbsences + " absences.");
+            }
+        }
+
 
 
     }
