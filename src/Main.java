@@ -15,17 +15,12 @@ public class Main {
         System.out.println("Welcome, " + name + "!");
 
         // Make & output ArrayList of absences
-        ArrayList<Integer> absences = new ArrayList<>();
-        Random rand = new Random();
-        for (int i = 0; i < name.length(); i++) {
-            int num = rand.nextInt(11);
-            absences.add(num);
-        }
+        ArrayList<Integer> absences = initialize(name.length(), 11);
         System.out.println("The elements are " + absences);
 
 
         // Number of students with perfect attendance
-        System.out.println(perfAttend(absences) + " student(s) had perfect attendance.");
+        System.out.println(countNumAbsences(absences, 0) + " student(s) had perfect attendance.");
 
 
         // Average of all absences
@@ -33,17 +28,12 @@ public class Main {
 
 
         // % of students with fewer than 3 absences & perfect attendance
-        System.out.println(percent(absences) + "% of students who had fewer than 3 absences also had perfect attendance.");
+        System.out.println(percentLessThan(absences, 3) + "% of students who had fewer than 3 absences also had perfect attendance.");
 
         // students that had [X] absences
         System.out.print("Enter the number of absences you'd like to check: ");
         int numAbsences = sc.nextInt();
-        ArrayList<Integer> indexAbsence = new ArrayList<>();
-        for (int i = 0; i < absences.size(); i++) {
-            if (absences.get(i) == numAbsences) {
-                indexAbsence.add(i);
-            }
-        }
+        ArrayList<Integer> indexAbsence = findAbsencesIndex(absences, numAbsences);
         if (!indexAbsence.isEmpty()) {
             System.out.println("The students at indices " + indexAbsence + " had " + numAbsences + " absences.");
         } else {
@@ -54,12 +44,9 @@ public class Main {
         // Which and what percentage of students have FE'd the course
             System.out.print("How many times per week does this course meet? ");
             double numFE = sc.nextInt() * 2;
-            ArrayList<Integer> indexFE = new ArrayList<>();
-            for (int i = 0; i<absences.size();i++) {
-        if (absences.get(i) >= numFE) {
-            indexFE.add(i);
-        }
-    }
+            ArrayList<Integer> indexFE = findFE(absences, numFE);
+
+
         if(indexFE.size()>0) {
         System.out.println("The index(es) of the student(s) who have FE'd this course are: " + indexFE);
         double percentFE = (numFE / absences.size()) * 100.0;
@@ -67,30 +54,78 @@ public class Main {
         System.out.println(percentFE + "% of students have FE'd this course.");
 
     }
+
+    //average of only the non-FE'd absences
+        ArrayList<Integer> nonFE = nonFE(absences, indexFE);
+        System.out.println("The average of only the non-FE'd absences is " + average(nonFE));
 }
 
-
-
-    // function that counts how many students have perfect attendance
-    private static double perfAttend(ArrayList<Integer> absences) {
-        int perfAttend = 0;
-        for (int i = 0; i < absences.size(); i++) {
-            if (absences.get(i) == 0) {
-                perfAttend++;
-            }
+    private static ArrayList<Integer> nonFE(ArrayList<Integer> absences, ArrayList<Integer> indexFE) {
+        for (int i = 0; i < indexFE.size(); i++) {
+            absences.remove(indexFE.get(i));
         }
-        return (double) perfAttend;
+        return absences;
     }
 
-    // function that calculates percent of students that have less than 3 absences and perfect attendance
-    private static double percent(ArrayList<Integer> absences) {
-        int lessThan3 = 0;
-        for (int i=0; i < absences.size(); i++) {
-            if (absences.get(i) < 3) {
-                lessThan3++;
+    private static ArrayList<Integer> findAbsencesIndex(ArrayList<Integer> absences, int numAbsences) {
+        ArrayList<Integer> indexAbsence = new ArrayList<>();
+        for (int i = 0; i < absences.size(); i++) {
+            if (absences.get(i) == numAbsences) {
+                indexAbsence.add(i);
             }
         }
-        double percent = (perfAttend(absences) / lessThan3) * 100;
+        return indexAbsence;
+    }
+
+    // function that initializes ArrayLists of integers
+    private static ArrayList<Integer> initialize(int numOfElements, int bound) {
+        ArrayList<Integer> answer = new ArrayList<>();
+        Random rand = new Random();
+        for (int i = 0; i < numOfElements; i++){
+            answer.add(rand.nextInt(bound));
+        }
+        return answer;
+    }
+
+    private static ArrayList<Integer> findFE(ArrayList<Integer> absences, double numFE) {
+        ArrayList<Integer> indexFE = new ArrayList<>();
+        for (int i = 0; i < absences.size(); i++) {
+            if (absences.get(i) >= numFE) {
+                indexFE.add(i);
+            }
+        }
+        return indexFE;
+    }
+
+
+
+
+
+    // function that counts how many students have [X] absences
+    private static int countNumAbsences(ArrayList<Integer> result, int numAbsences) {
+        int numOfAbsences = 0;
+        for (int i = 0; i < result.size(); i++) {
+            if (result.get(i) == numAbsences) {
+                numOfAbsences++;
+            }
+        }
+        return numOfAbsences;
+    }
+
+    // function that counts how many students have less than [X] absences
+    private static int countLessThan(ArrayList<Integer> absences, int maxNum) {
+        int lessThan = 0;
+        for (int i = 0; i < absences.size(); i++) {
+            if (absences.get(i) < maxNum){
+                lessThan++;
+            }
+        }
+        return lessThan;
+    }
+
+    // function that calculates percent of students that have less than [X] absences and perfect attendance
+    private static double percentLessThan(ArrayList<Integer> absences, int maxNum) {
+        double percent = (countNumAbsences(absences, 0) / countLessThan(absences, maxNum)) * 100.0;
         return percent;
     }
 
