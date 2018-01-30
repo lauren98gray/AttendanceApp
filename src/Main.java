@@ -79,7 +79,21 @@ public class Main {
         // Sort the absences using a user-defined sort function
         bubbleSort(absences);
         System.out.println("Sorted absences: " + absences);
+
+        // shuffle the absences using a user-defined shuffle function
+        shuffle(absences);
+        System.out.println("Shuffled absences: " + absences);
 }
+
+    private static void shuffle(ArrayList<Integer> absences){
+        Random rand = new Random();
+        for (int i = 0; i < absences.size(); i++) {
+            int randIndex = rand.nextInt(absences.size());
+            int temp = absences.get(randIndex);
+            absences.set(randIndex, absences.get(i));
+            absences.set(i, temp);
+        }
+    }
 
     private static void bubbleSort(ArrayList<Integer> absences) {
         for (int i = 0; i < absences.size(); i++) {
