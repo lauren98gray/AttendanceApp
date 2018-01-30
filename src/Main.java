@@ -28,6 +28,7 @@ public class Main {
 
 
         // % of students with fewer than 3 absences & perfect attendance
+        // keeps outputting 0.0%
         System.out.println(percentLessThan(absences, 3) + "% of students who had fewer than 3 absences also had perfect attendance.");
 
         // students that had [X] absences
@@ -43,30 +44,63 @@ public class Main {
 
         // Which and what percentage of students have FE'd the course
             System.out.print("How many times per week does this course meet? ");
-            double numFE = sc.nextInt() * 2;
+            int numFE = sc.nextInt() * 2;
             ArrayList<Integer> indexFE = findFE(absences, numFE);
 
-
+        // always outputs 0.0%
         if(indexFE.size()>0) {
         System.out.println("The index(es) of the student(s) who have FE'd this course are: " + indexFE);
         double percentFE = (numFE / absences.size()) * 100.0;
-        //System.out.printf("Formatted %d divided by %d is %.2f%%", indexFE.size(), absences.size(), percentFE);
+        //System.out.printf(" %d divided by %d is %.2f%%", indexFE.size(), absences.size(), percentFE);
         System.out.println(percentFE + "% of students have FE'd this course.");
 
     }
 
     //average of only the non-FE'd absences
-        ArrayList<Integer> nonFE = nonFE(absences, indexFE);
+    //always outputs empty list
+        ArrayList<Integer> nonFE = listNonFE(absences, numFE);
+        System.out.println("the non- fe: " + nonFE);
         System.out.println("The average of only the non-FE'd absences is " + average(nonFE));
+
+        //Add [X] to any absences greater than [Y]
+        addAbsences(absences, 3, 2);
+        System.out.println("Absences with 3 added to anything greater than 2: " + absences);
 }
 
-    private static ArrayList<Integer> nonFE(ArrayList<Integer> absences, ArrayList<Integer> indexFE) {
-        for (int i = 0; i < indexFE.size(); i++) {
-            absences.remove(indexFE.get(i));
+    private static void addAbsences(ArrayList<Integer> absences, int numToAdd, int minNum) {
+        for (int i = 0; i < absences.size(); i++) {
+            if (absences.get(i) > minNum){
+                absences.set(i, absences.get(i) + numToAdd);
+            }
+            if (absences.get(i) < 0){
+                absences.set(i, 0);
+            }
+            if (absences.get(i) > 15){
+                absences.set(i, 15);
+            }
         }
-        return absences;
     }
 
+    //function that returns ArrayList of nonFE's
+    //returns empty list?
+    // tried !indexFE.contains(i) & nested loop. same problem
+    private static ArrayList<Integer> listNonFE(ArrayList<Integer> absences, int numFE) {
+        ArrayList<Integer> indexFE = findFE(absences, numFE);
+        ArrayList<Integer> answer = new ArrayList<>();
+        for (int i = 0; i >= absences.size(); i++) {
+            for (int j = 0; j < indexFE.size(); j++) {
+                if (indexFE.get(j) == i){
+                    answer.add(i);
+                }
+            }
+            //if (! indexFE.contains(i)){
+                //answer.add(i);
+            //}
+        }
+        return answer;
+    }
+
+    //function that finds indices of specific num of absences
     private static ArrayList<Integer> findAbsencesIndex(ArrayList<Integer> absences, int numAbsences) {
         ArrayList<Integer> indexAbsence = new ArrayList<>();
         for (int i = 0; i < absences.size(); i++) {
@@ -87,7 +121,8 @@ public class Main {
         return answer;
     }
 
-    private static ArrayList<Integer> findFE(ArrayList<Integer> absences, double numFE) {
+    //function that returns ArrayList of indices of FE's
+    private static ArrayList<Integer> findFE(ArrayList<Integer> absences, int numFE) {
         ArrayList<Integer> indexFE = new ArrayList<>();
         for (int i = 0; i < absences.size(); i++) {
             if (absences.get(i) >= numFE) {
