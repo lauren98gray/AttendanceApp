@@ -70,6 +70,10 @@ public class Main {
         // Sort absences using a library function
         Collections.sort(absences);
         System.out.println("Sorted absences: " + absences);
+
+        // Shuffle absences using a library function
+        Collections.shuffle(absences);
+        System.out.println("Shuffled absences: " + absences);
 }
 
     private static void addAbsences(ArrayList<Integer> absences, int numToAdd, int minNum) {
