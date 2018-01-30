@@ -75,7 +75,23 @@ public class Main {
         // how many absences are unique
         Set<Integer> uniqueAbsences = countUnique(absences);
         System.out.println(uniqueAbsences.size() + " absences are unique.");
+
+        // Sort the absences using a user-defined sort function
+        bubbleSort(absences);
+        System.out.println("Sorted absences: " + absences);
 }
+
+    private static void bubbleSort(ArrayList<Integer> absences) {
+        for (int i = 0; i < absences.size(); i++) {
+            for (int j = 0; j < absences.size(); j++) {
+                if (absences.get(i) < absences.get(j)){
+                    int temp = absences.get(i);
+                    absences.set(i, absences.get(j));
+                    absences.set(j, temp);
+                }
+            }
+        }
+    }
 
     private static Set<Integer> countUnique(ArrayList<Integer> absences) {
         Set<Integer> solution = new HashSet<>();
