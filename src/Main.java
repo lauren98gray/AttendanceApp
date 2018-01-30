@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -50,9 +51,9 @@ public class Main {
         // always outputs 0.0%
         if(indexFE.size()>0) {
         System.out.println("The index(es) of the student(s) who have FE'd this course are: " + indexFE);
-        double percentFE = (numFE / absences.size()) * 100.0;
+        //double percentFE = (numFE / absences.size()) * 100.0;
         //System.out.printf(" %d divided by %d is %.2f%%", indexFE.size(), absences.size(), percentFE);
-        System.out.println(percentFE + "% of students have FE'd this course.");
+        //System.out.println(percentFE + "% of students have FE'd this course.");
 
     }
 
@@ -60,11 +61,15 @@ public class Main {
     //always outputs empty list
         ArrayList<Integer> nonFE = listNonFE(absences, numFE);
         System.out.println("the non- fe: " + nonFE);
-        System.out.println("The average of only the non-FE'd absences is " + average(nonFE));
+        //System.out.println("The average of only the non-FE'd absences is " + average(nonFE));
 
         //Add [X] to any absences greater than [Y]
         addAbsences(absences, 3, 2);
         System.out.println("Absences with 3 added to anything greater than 2: " + absences);
+
+        // Sort absences using a library function
+        Collections.sort(absences);
+        System.out.println("Sorted absences: " + absences);
 }
 
     private static void addAbsences(ArrayList<Integer> absences, int numToAdd, int minNum) {
