@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -74,7 +71,19 @@ public class Main {
         // Shuffle absences using a library function
         Collections.shuffle(absences);
         System.out.println("Shuffled absences: " + absences);
+
+        // how many absences are unique
+        Set<Integer> uniqueAbsences = countUnique(absences);
+        System.out.println(uniqueAbsences.size() + " absences are unique.");
 }
+
+    private static Set<Integer> countUnique(ArrayList<Integer> absences) {
+        Set<Integer> solution = new HashSet<>();
+        for (int i = 0; i < absences.size(); i++) {
+            solution.add(absences.get(i));
+        }
+        return solution;
+    }
 
     private static void addAbsences(ArrayList<Integer> absences, int numToAdd, int minNum) {
         for (int i = 0; i < absences.size(); i++) {
