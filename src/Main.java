@@ -22,12 +22,11 @@ public class Main {
 
 
         // Average of all absences
-        System.out.println("The average of all the absences is " + average(absences) + ".");
+        System.out.printf("The average of all the absences is %.2f%%.\n", average(absences));
 
 
         // % of students with fewer than 3 absences & perfect attendance
-        // keeps outputting 0.0%
-        System.out.println(percentLessThan(absences, 3) + "% of students who had fewer than 3 absences also had perfect attendance.");
+        System.out.printf("%.2f%% of students who had fewer than 3 absences also had perfect attendance.\n", percentLessThan(absences, 3));
 
         // students that had [X] absences
         System.out.print("Enter the number of absences you'd like to check: ");
@@ -44,21 +43,20 @@ public class Main {
             System.out.print("How many times per week does this course meet? ");
             int numFE = sc.nextInt() * 2;
             ArrayList<Integer> indexFE = findFE(absences, numFE);
+            ArrayList<Integer> valuesFE = findFEvalues(absences, numFE);
 
         // always outputs 0.0%
         if(indexFE.size()>0) {
         System.out.println("The index(es) of the student(s) who have FE'd this course are: " + indexFE);
-        //double percentFE = (numFE / absences.size()) * 100.0;
-        //System.out.printf(" %d divided by %d is %.2f%%", indexFE.size(), absences.size(), percentFE);
-        //System.out.println(percentFE + "% of students have FE'd this course.");
+        double percentFE = ((double) numFE / (double) absences.size()) * 100.0;
+        System.out.printf("%.2f%%" + " of students have FE'd this course.\n", percentFE);
 
     }
 
-    //average of only the non-FE'd absences
-    //always outputs empty list
+        //average of only the non-FE'd absences
+        //always outputs empty list
         ArrayList<Integer> nonFE = listNonFE(absences, numFE);
-        System.out.println("the non- fe: " + nonFE);
-        //System.out.println("The average of only the non-FE'd absences is " + average(nonFE));
+        System.out.println("The average of only the non-FE'd absences is " + average(nonFE));
 
         //Add [X] to any absences greater than [Y]
         addAbsences(absences, 3, 2);
@@ -83,7 +81,31 @@ public class Main {
         // shuffle the absences using a user-defined shuffle function
         shuffle(absences);
         System.out.println("Shuffled absences: " + absences);
+
+        // Create and output an ArrayList of 5 distinct names
+        ArrayList<String> names = initializeNames();
+        System.out.println("ArrayList of 5 names: " + names);
 }
+
+    private static ArrayList<String> initializeNames() {
+        ArrayList<String> name = new ArrayList<>();
+        name.add("Preston");
+        name.add("Clarrette");
+        name.add("Daniele");
+        name.add("Maya");
+        name.add("John");
+        return name;
+    }
+
+    private static ArrayList<Integer> findFEvalues(ArrayList<Integer> absences, int numFE) {
+        ArrayList<Integer> answer = new ArrayList<>();
+        for (int i = 0; i < absences.size(); i++) {
+            if (absences.get(i) >= numFE){
+                answer.add(absences.get(i));
+            }
+        }
+        return answer;
+    }
 
     private static void shuffle(ArrayList<Integer> absences){
         Random rand = new Random();
@@ -130,20 +152,13 @@ public class Main {
     }
 
     //function that returns ArrayList of nonFE's
-    //returns empty list?
-    // tried !indexFE.contains(i) & nested loop. same problem
     private static ArrayList<Integer> listNonFE(ArrayList<Integer> absences, int numFE) {
-        ArrayList<Integer> indexFE = findFE(absences, numFE);
+        ArrayList<Integer> valueFE = findFEvalues(absences, numFE);
         ArrayList<Integer> answer = new ArrayList<>();
-        for (int i = 0; i >= absences.size(); i++) {
-            for (int j = 0; j < indexFE.size(); j++) {
-                if (indexFE.get(j) == i){
-                    answer.add(i);
-                }
+        for (int i = 0; i < absences.size(); i++) {
+            if (! valueFE.contains(absences.get(i))){
+                answer.add(absences.get(i));
             }
-            //if (! indexFE.contains(i)){
-                //answer.add(i);
-            //}
         }
         return answer;
     }
@@ -182,8 +197,6 @@ public class Main {
 
 
 
-
-
     // function that counts how many students have [X] absences
     private static int countNumAbsences(ArrayList<Integer> result, int numAbsences) {
         int numOfAbsences = 0;
@@ -208,7 +221,7 @@ public class Main {
 
     // function that calculates percent of students that have less than [X] absences and perfect attendance
     private static double percentLessThan(ArrayList<Integer> absences, int maxNum) {
-        double percent = (countNumAbsences(absences, 0) / countLessThan(absences, maxNum)) * 100.0;
+        double percent = ((double) countNumAbsences(absences, 0) / (double) countLessThan(absences, maxNum)) * 100.0;
         return percent;
     }
 
@@ -223,7 +236,7 @@ public class Main {
 
     // function that calculates average
     private static double average(ArrayList<Integer> absences) {
-        int avg = sum(absences) / absences.size();
+        double avg = (double) sum(absences) / (double) absences.size();
         return avg;
     }
 }
