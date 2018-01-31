@@ -1,6 +1,8 @@
 import java.util.*;
 
 public class Main {
+    
+    static Random rand = new Random();
 
     public static void main(String[] args) {
 
@@ -85,7 +87,20 @@ public class Main {
         // Create and output an ArrayList of 5 distinct names
         ArrayList<String> names = initializeNames();
         System.out.println("ArrayList of 5 names: " + names);
+
+        //Shuffle the names using user-defined shuffle
+        shuffleNames(names);
+        System.out.println("Shuffled list of names: " + names);
 }
+
+    private static void shuffleNames(ArrayList<String> names) {
+        for (int i = 0; i < names.size(); i++) {
+            int randIndex = rand.nextInt(names.size());
+            String temp = names.get(randIndex);
+            names.set(randIndex, names.get(i));
+            names.set(i, temp);
+        }
+    }
 
     private static ArrayList<String> initializeNames() {
         ArrayList<String> name = new ArrayList<>();
