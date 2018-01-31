@@ -1,7 +1,8 @@
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class Main {
-    
+
     static Random rand = new Random();
 
     public static void main(String[] args) {
@@ -24,7 +25,7 @@ public class Main {
 
 
         // Average of all absences
-        System.out.printf("The average of all the absences is %.2f%%.\n", average(absences));
+        System.out.println("The average of all the absences is " + average(absences));
 
 
         // % of students with fewer than 3 absences & perfect attendance
@@ -47,16 +48,14 @@ public class Main {
             ArrayList<Integer> indexFE = findFE(absences, numFE);
             ArrayList<Integer> valuesFE = findFEvalues(absences, numFE);
 
-        // always outputs 0.0%
-        if(indexFE.size()>0) {
-        System.out.println("The index(es) of the student(s) who have FE'd this course are: " + indexFE);
-        double percentFE = ((double) numFE / (double) absences.size()) * 100.0;
-        System.out.printf("%.2f%%" + " of students have FE'd this course.\n", percentFE);
 
-    }
+            if(indexFE.size()>0) {
+                System.out.println("The index(es) of the student(s) who have FE'd this course are: " + indexFE);
+                double percentFE = ((double) numFE / (double) absences.size()) * 100.0;
+                System.out.printf("%.2f%%" + " of students have FE'd this course.\n", percentFE);
+            }
 
         //average of only the non-FE'd absences
-        //always outputs empty list
         ArrayList<Integer> nonFE = listNonFE(absences, numFE);
         System.out.println("The average of only the non-FE'd absences is " + average(nonFE));
 
@@ -91,7 +90,22 @@ public class Main {
         //Shuffle the names using user-defined shuffle
         shuffleNames(names);
         System.out.println("Shuffled list of names: " + names);
+
+        // Create list with same size as absences using the 5 names
+        ArrayList<String> listOfSameAmountOfNamesAsAbsences = sameAmountOfNamesAsAbsences(absences);
+        System.out.println("List of names with same amount as absences: " + listOfSameAmountOfNamesAsAbsences);
 }
+
+    private static ArrayList<String> sameAmountOfNamesAsAbsences(ArrayList<Integer> absences) {
+        ArrayList<String> names = initializeNames();
+        ArrayList<String> result = new ArrayList<>();
+        for (int i = 0; i < absences.size(); i++) {
+            int randIndex = rand.nextInt(names.size());
+            String name = names.get(randIndex);
+            result.add(name);
+        }
+        return result;
+    }
 
     private static void shuffleNames(ArrayList<String> names) {
         for (int i = 0; i < names.size(); i++) {
