@@ -104,8 +104,20 @@ public class Main {
         ArrayList<String> studentsPerfAttend = findStudentsByNumOfAbsences(absences, listOfSameAmountOfNamesAsAbsences, 0);
         System.out.println("The students who had perfect attendance are: " + studentsPerfAttend);
 
-
+        // What are the names of the students who have FE'd some course
+        Set<String> studentsFE = findStudentsFE(absences, listOfSameAmountOfNamesAsAbsences, numFE);
+        System.out.println("The students who have FE'd some course: " + studentsFE);
+        
 }
+
+    private static Set<String> findStudentsFE(ArrayList<Integer> absences, ArrayList<String> names, int numFE) {
+        ArrayList<Integer> indicesFE = findFE(absences, numFE);
+        Set<String> namesFE = new HashSet<>();
+        for (int i = 0; i < indicesFE.size(); i++) {
+            namesFE.add(names.get(indicesFE.get(i)));
+        }
+        return namesFE;
+    }
 
     private static ArrayList<String> findStudentsByNumOfAbsences(ArrayList<Integer> absences, ArrayList<String> names, int numAbsences) {
         ArrayList<Integer> indicesPerfAttend = findAbsencesIndex(absences, numAbsences);
