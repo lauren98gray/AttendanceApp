@@ -1,4 +1,5 @@
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 public class Main {
@@ -107,7 +108,16 @@ public class Main {
         // What are the names of the students who have FE'd some course
         Set<String> studentsFE = findStudentsFE(absences, listOfSameAmountOfNamesAsAbsences, numFE);
         System.out.println("The students who have FE'd some course: " + studentsFE);
-        
+
+        // How many courses does [name] have?
+
+        // Which courses did [name] FE?
+
+        // Generate today's date and output it
+        LocalDate today = LocalDate.now();
+        System.out.println("Today's date is: " + today);
+
+
 }
 
     private static Set<String> findStudentsFE(ArrayList<Integer> absences, ArrayList<String> names, int numFE) {
