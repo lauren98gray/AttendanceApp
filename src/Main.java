@@ -75,6 +75,8 @@ public class Main {
         Set<Integer> uniqueAbsences = countUnique(absences);
         System.out.println(uniqueAbsences.size() + " absences are unique.");
 
+        //How many of each absence value are there?
+
         // Sort the absences using a user-defined sort function
         bubbleSort(absences);
         System.out.println("Sorted absences: " + absences);
@@ -94,7 +96,36 @@ public class Main {
         // Create list with same size as absences using the 5 names
         ArrayList<String> listOfSameAmountOfNamesAsAbsences = sameAmountOfNamesAsAbsences(absences);
         System.out.println("List of names with same amount as absences: " + listOfSameAmountOfNamesAsAbsences);
+
+        // Were all 5 names used at least once?
+        //checkIfUsed(listOfSameAmountOfNamesAsAbsences);
+
+        // What are the names of the students with perfect attendance
+        ArrayList<String> studentsPerfAttend = findStudentsByNumOfAbsences(absences, listOfSameAmountOfNamesAsAbsences, 0);
+        System.out.println("The students who had perfect attendance are: " + studentsPerfAttend);
+
+
 }
+
+    private static ArrayList<String> findStudentsByNumOfAbsences(ArrayList<Integer> absences, ArrayList<String> names, int numAbsences) {
+        ArrayList<Integer> indicesPerfAttend = findAbsencesIndex(absences, numAbsences);
+        ArrayList<String> namesPerfAttend = new ArrayList<>();
+        for (int i = 0; i < indicesPerfAttend.size(); i++) {
+            namesPerfAttend.add(names.get(indicesPerfAttend.get(i)));
+        }
+        return namesPerfAttend;
+    }
+
+    /*private static boolean checkIfUsed(ArrayList<String> listOfSameAmountOfNamesAsAbsences) {
+        ArrayList<String> names = initializeNames();
+        for (int i = 0; i < names.size(); i++) {
+            for (int j = 0; j < listOfSameAmountOfNamesAsAbsences.size(); j++) {
+                if (names.get(i).equals(listOfSameAmountOfNamesAsAbsences.get(j))){
+
+                }
+            }
+        }
+    }*/
 
     private static ArrayList<String> sameAmountOfNamesAsAbsences(ArrayList<Integer> absences) {
         ArrayList<String> names = initializeNames();
