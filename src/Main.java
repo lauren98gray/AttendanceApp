@@ -110,6 +110,10 @@ public class Main {
         System.out.println("The students who have FE'd some course: " + studentsFE);
 
         // How many courses does [name] have?
+        System.out.print("Enter name of student to see how many courses he or she has: ");
+        String nameFromInput = sc.next();
+        int numCoursesFromName = countNumCourses(listOfSameAmountOfNamesAsAbsences, nameFromInput);
+        System.out.println(nameFromInput + " has " + numCoursesFromName + " courses.");
 
         // Which courses did [name] FE?
 
@@ -117,8 +121,25 @@ public class Main {
         LocalDate today = LocalDate.now();
         System.out.println("Today's date is: " + today);
 
+        // How many days have you been alive?
+        //int numDaysAlive = numDaysAlive();
+
 
 }
+
+    private static int countNumCourses(ArrayList<String> names, String name) {
+        int count = 0;
+        for (int i = 0; i < names.size(); i++) {
+            if (names.get(i).equals(name)){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /*private static int numDaysAlive(LocalDate birthYear, LocalDate birthMonth, LocalDate birthday) {
+
+    }*/
 
     private static Set<String> findStudentsFE(ArrayList<Integer> absences, ArrayList<String> names, int numFE) {
         ArrayList<Integer> indicesFE = findFE(absences, numFE);
