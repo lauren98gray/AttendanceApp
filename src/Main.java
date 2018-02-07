@@ -77,6 +77,9 @@ public class Main {
         System.out.println(uniqueAbsences.size() + " absences are unique.");
 
         //How many of each absence value are there?
+        Map<Integer, Integer> amountOfEachAbsenceValue = CalculateAmountOfEachAbsenceValue(absences);
+        System.out.println("Map of how many of each absence value there is: " + amountOfEachAbsenceValue);
+        //TODO Create histogram using map
 
         // Sort the absences using a user-defined sort function
         bubbleSort(absences);
@@ -98,7 +101,7 @@ public class Main {
         ArrayList<String> listOfSameAmountOfNamesAsAbsences = sameAmountOfNamesAsAbsences(absences);
         System.out.println("List of names with same amount as absences: " + listOfSameAmountOfNamesAsAbsences);
 
-        // Were all 5 names used at least once?
+        // TODO Were all 5 names used at least once?
         //checkIfUsed(listOfSameAmountOfNamesAsAbsences);
 
         // What are the names of the students with perfect attendance
@@ -115,17 +118,29 @@ public class Main {
         int numCoursesFromName = countNumCourses(listOfSameAmountOfNamesAsAbsences, nameFromInput);
         System.out.println(nameFromInput + " has " + numCoursesFromName + " courses.");
 
-        // Which courses did [name] FE?
+        // TODO Which courses did [name] FE?
+        System.out.print("Enter name of student to see which courses he or she FE'd: ");
+        String nameFromInputFE = sc.next();
+
 
         // Generate today's date and output it
         LocalDate today = LocalDate.now();
         System.out.println("Today's date is: " + today);
 
-        // How many days have you been alive?
+        // TODO How many days have you been alive?
         //int numDaysAlive = numDaysAlive();
 
 
 }
+
+    private static Map<Integer, Integer> CalculateAmountOfEachAbsenceValue(ArrayList<Integer> absences) {
+        Map<Integer, Integer> amountOfEachAbsenceValue = new HashMap<>();
+        for (Integer absence : absences) {
+            amountOfEachAbsenceValue.putIfAbsent(absence, amountOfEachAbsenceValue.getOrDefault(absence, 0));
+            amountOfEachAbsenceValue.put(absence, amountOfEachAbsenceValue.get(absence) + 1);
+        }
+        return amountOfEachAbsenceValue;
+    }
 
     private static int countNumCourses(ArrayList<String> names, String name) {
         int count = 0;
@@ -233,11 +248,15 @@ public class Main {
     }
 
     private static Set<Integer> countUnique(ArrayList<Integer> absences) {
-        Set<Integer> solution = new HashSet<>();
-        for (int i = 0; i < absences.size(); i++) {
-            solution.add(absences.get(i));
+        Set<Integer> uniques = new HashSet<>();
+        Set<Integer> repeats = new HashSet<>();
+        for (Integer absence : absences) {
+            if (!uniques.add(absence)) {
+                repeats.add(absence);
+            }
         }
-        return solution;
+        uniques.removeAll(repeats);
+        return uniques;
     }
 
     private static void addAbsences(ArrayList<Integer> absences, int numToAdd, int minNum) {
