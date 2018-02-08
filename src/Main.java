@@ -79,7 +79,8 @@ public class Main {
         //How many of each absence value are there?
         Map<Integer, Integer> amountOfEachAbsenceValue = CalculateAmountOfEachAbsenceValue(absences);
         System.out.println("Map of how many of each absence value there is: " + amountOfEachAbsenceValue);
-        //TODO Create histogram using map
+        String histogram = buildHistogram(amountOfEachAbsenceValue);
+        System.out.println(histogram);
 
         // Sort the absences using a user-defined sort function
         bubbleSort(absences);
@@ -133,11 +134,31 @@ public class Main {
 
 }
 
+    private static String buildHistogram(Map<Integer, Integer> amountOfEachAbsenceValue) {
+        String histogram = "";
+        for (Map.Entry<Integer, Integer> entry : amountOfEachAbsenceValue.entrySet()){
+            int key = entry.getKey();
+            int value = entry.getValue();
+
+            histogram += key + multiplyString(value, "*") + "\n";
+
+        }
+        return histogram;
+    }
+
+    private static String multiplyString(int value, String symbol) {
+        String string = "";
+        for (int i = 0; i < value; i++) {
+            string += symbol;
+        }
+        return string;
+    }
+
     private static Map<Integer, Integer> CalculateAmountOfEachAbsenceValue(ArrayList<Integer> absences) {
         Map<Integer, Integer> amountOfEachAbsenceValue = new HashMap<>();
         for (Integer absence : absences) {
             amountOfEachAbsenceValue.putIfAbsent(absence, amountOfEachAbsenceValue.getOrDefault(absence, 0));
-            amountOfEachAbsenceValue.put(absence, amountOfEachAbsenceValue.get(absence) + 1);
+            amountOfEachAbsenceValue.put(absence, amountOfEachAbsenceValue.get(absence) +1);
         }
         return amountOfEachAbsenceValue;
     }
