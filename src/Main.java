@@ -128,11 +128,23 @@ public class Main {
         LocalDate today = LocalDate.now();
         System.out.println("Today's date is: " + today);
 
-        // TODO How many days have you been alive?
-        //int numDaysAlive = numDaysAlive();
+        // How many days have you been alive?
+        LocalDate birthday = LocalDate.of(1998, 12, 3);
+        long numDaysSince = calculateNumDaysSince(today, birthday);
+
+        System.out.println("I have been alive for " + numDaysSince + " days");
+
+
 
 
 }
+
+    private static long calculateNumDaysSince(LocalDate lastDate, LocalDate startDate) {
+        long startSinceEpoch = startDate.toEpochDay();
+        long lastSinceEpoch = lastDate.toEpochDay();
+        long numDaysSince = lastSinceEpoch - startSinceEpoch;
+        return numDaysSince;
+    }
 
     private static String buildHistogram(Map<Integer, Integer> amountOfEachAbsenceValue) {
         String histogram = "";
