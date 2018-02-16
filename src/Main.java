@@ -52,7 +52,7 @@ public class Main {
 
             if(indexFE.size()>0) {
                 System.out.println("The index(es) of the student(s) who have FE'd this course are: " + indexFE);
-                double percentFE = ((double) numFE / (double) absences.size()) * 100.0;
+                double percentFE = ((double) indexFE.size() / (double) absences.size()) * 100.0;
                 System.out.printf("%.2f%%" + " of students have FE'd this course.\n", percentFE);
             }
 
@@ -134,10 +134,34 @@ public class Main {
 
         System.out.println("I have been alive for " + numDaysSince + " days");
 
+        //Create a list of LocalDate Objects
+        ArrayList<LocalDate> dates = initializeDates(absences, today);
+        System.out.println("List of dates within 20 days of today's date: " + dates);
+
+        // TODO What are the names of the students with the fewest absences
+
+        // TODO What are the names of students who have the longest number of days since an absence
+
+        // TODO What is the range of absence dates?
+
+        // TODO What are the indexes of the students who have [X] absence date
+
+        // TODO What are the the indexes of the students who have the same absence date?
+
+
 
 
 
 }
+
+    private static ArrayList<LocalDate> initializeDates(ArrayList<Integer> absences, LocalDate today) {
+        ArrayList<LocalDate> dates = new ArrayList<>();
+        Random rand = new Random();
+        for (int i = 0; i < absences.size(); i++) {
+            dates.add(today.minusDays(rand.nextInt(21)));
+        }
+        return dates;
+    }
 
     private static long calculateNumDaysSince(LocalDate lastDate, LocalDate startDate) {
         long startSinceEpoch = startDate.toEpochDay();
@@ -185,9 +209,6 @@ public class Main {
         return count;
     }
 
-    /*private static int numDaysAlive(LocalDate birthYear, LocalDate birthMonth, LocalDate birthday) {
-
-    }*/
 
     private static Set<String> findStudentsFE(ArrayList<Integer> absences, ArrayList<String> names, int numFE) {
         ArrayList<Integer> indicesFE = findFE(absences, numFE);
