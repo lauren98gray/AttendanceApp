@@ -1,4 +1,3 @@
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -138,7 +137,9 @@ public class Main {
         ArrayList<LocalDate> dates = initializeDates(absences, today);
         System.out.println("List of dates within 20 days of today's date: " + dates);
 
-        // TODO What are the names of the students with the fewest absences
+        //What are the names of the students with the fewest absences
+        Set<String> studentsMinAbsences = findStudentsMinAbsences(absences, listOfSameAmountOfNamesAsAbsences);
+        System.out.println("Students with the fewest absences: " + studentsMinAbsences);
 
         // TODO What are the names of students who have the longest number of days since an absence
 
@@ -153,6 +154,22 @@ public class Main {
 
 
 }
+
+    private static Set<String> findStudentsMinAbsences(ArrayList<Integer> absences, ArrayList<String> students) {
+        int min = 15;
+        Set<String> studentsMin = new HashSet<>();
+        for (Integer absence : absences){
+            if (absence < min){
+                min = absence;
+            }
+        }
+        for (int i = 0; i < absences.size(); i++){
+            if (absences.get(i) == min){
+                studentsMin.add(students.get(i));
+            }
+        }
+        return studentsMin;
+    }
 
     private static ArrayList<LocalDate> initializeDates(ArrayList<Integer> absences, LocalDate today) {
         ArrayList<LocalDate> dates = new ArrayList<>();
