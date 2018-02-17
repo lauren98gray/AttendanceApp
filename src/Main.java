@@ -142,8 +142,13 @@ public class Main {
         System.out.println("Students with the fewest absences: " + studentsMinAbsences);
 
         // TODO What are the names of students who have the longest number of days since an absence
+        Set<String> studentsLongestNumDaysSinceAbsence = findStudentsLongestNumDaysSinceAbsence(dates, listOfSameAmountOfNamesAsAbsences);
+        System.out.println("Students who have the longest number of days since an absence: " + studentsLongestNumDaysSinceAbsence);
 
-        // TODO What is the range of absence dates?
+        //What is the range of absence dates?
+        LocalDate latestDate = findLatestDate(dates);
+        LocalDate earliestDate = findEarliestDate(dates);
+        System.out.println("The range of absence dates is from " + earliestDate + " to " + latestDate + ", or " + calculateNumDaysSince(latestDate, earliestDate) + " days.");
 
         // TODO What are the indexes of the students who have [X] absence date
 
@@ -154,6 +159,47 @@ public class Main {
 
 
 }
+
+    private static LocalDate findEarliestDate(ArrayList<LocalDate> dates) {
+        LocalDate today = LocalDate.now();
+        long longestNumDays = 0;
+        for (LocalDate date : dates) {
+            if (calculateNumDaysSince(today, date) > longestNumDays) {
+                longestNumDays = calculateNumDaysSince(today, date);
+            }
+        }
+        return today.minusDays(longestNumDays);
+    }
+
+    private static LocalDate findLatestDate(ArrayList<LocalDate> dates) {
+        LocalDate today = LocalDate.now();
+        long longestNumDays = 21;
+        for (LocalDate date : dates) {
+            if (calculateNumDaysSince(today, date) < longestNumDays) {
+                longestNumDays = calculateNumDaysSince(today, date);
+            }
+        }
+        return today.minusDays(longestNumDays);
+    }
+
+    //Function to find students who have the longest number of days since an absence
+    // Not sure if I have to use LocalDate.isAfter()
+    private static Set<String> findStudentsLongestNumDaysSinceAbsence(ArrayList<LocalDate> dates, ArrayList<String> students) {
+        Set<String> names = new HashSet<>();
+        LocalDate today = LocalDate.now();
+        long longestNumDays = 0;
+        for (LocalDate date : dates) {
+            if (calculateNumDaysSince(today, date) > longestNumDays) {
+                longestNumDays  = calculateNumDaysSince(today, date);
+            }
+        }
+        for (int i = 0; i < students.size(); i++) {
+            if (calculateNumDaysSince(today, dates.get(i)) == longestNumDays) {
+                names.add(students.get(i));
+            }
+        }
+        return names;
+    }
 
     private static Set<String> findStudentsMinAbsences(ArrayList<Integer> absences, ArrayList<String> students) {
         int min = 15;
