@@ -101,8 +101,12 @@ public class Main {
         ArrayList<String> listOfSameAmountOfNamesAsAbsences = sameAmountOfNamesAsAbsences(absences);
         System.out.println("List of names with same amount as absences: " + listOfSameAmountOfNamesAsAbsences);
 
-        // TODO Were all 5 names used at least once?
-        //checkIfUsed(listOfSameAmountOfNamesAsAbsences);
+        // Were all 5 names used at least once?
+        if (checkIfUsed(names, listOfSameAmountOfNamesAsAbsences)){
+            System.out.println("All names were used at least once.");
+        }else{
+            System.out.println("Not all names were used at least once.");
+        }
 
         // What are the names of the students with perfect attendance
         ArrayList<String> studentsPerfAttend = findStudentsByNumOfAbsences(absences, listOfSameAmountOfNamesAsAbsences, 0);
@@ -320,16 +324,17 @@ public class Main {
         return namesPerfAttend;
     }
 
-    /*private static boolean checkIfUsed(ArrayList<String> listOfSameAmountOfNamesAsAbsences) {
-        ArrayList<String> names = initializeNames();
-        for (int i = 0; i < names.size(); i++) {
-            for (int j = 0; j < listOfSameAmountOfNamesAsAbsences.size(); j++) {
-                if (names.get(i).equals(listOfSameAmountOfNamesAsAbsences.get(j))){
-
-                }
-            }
+    private static boolean checkIfUsed(ArrayList<String> originalListOfNames, ArrayList<String> listOfSameAmountOfNamesAsAbsences) {
+        Set<String> names = new HashSet<>();
+        for (String name : listOfSameAmountOfNamesAsAbsences){
+            names.add(name);
         }
-    }*/
+        if (names.size() == originalListOfNames.size()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     private static ArrayList<String> sameAmountOfNamesAsAbsences(ArrayList<Integer> absences) {
         ArrayList<String> names = initializeNames();
