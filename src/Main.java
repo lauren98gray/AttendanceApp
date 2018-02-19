@@ -118,9 +118,10 @@ public class Main {
         int numCoursesFromName = countNumCourses(listOfSameAmountOfNamesAsAbsences, nameFromInput);
         System.out.println(nameFromInput + " has " + numCoursesFromName + " courses.");
 
-        // TODO Which courses did [name] FE?
-        System.out.print("Enter name of student to see which courses he or she FE'd: ");
-        String nameFromInputFE = sc.next();
+        // Which courses did [name] FE?
+        String nameFE = "Maya";
+        ArrayList<Integer> coursesThatNameFE = findCoursesThatNameFE(listOfSameAmountOfNamesAsAbsences, indexFE, nameFE);
+        System.out.println(nameFE + " FE'd these courses: " + coursesThatNameFE);
 
 
         // Generate today's date and output it
@@ -162,6 +163,16 @@ public class Main {
 
 
 }
+
+    private static ArrayList<Integer> findCoursesThatNameFE(ArrayList<String> students, ArrayList<Integer> indexFE, String name) {
+        ArrayList<Integer> indexNameFE = new ArrayList<>();
+        for (Integer index : indexFE){
+            if (name == students.get(index)){
+                indexNameFE.add(index);
+            }
+        }
+        return indexNameFE;
+    }
 
     private static ArrayList<Integer> findIndexAbsenceDate(ArrayList<LocalDate> dates, LocalDate dateToCheck) {
         ArrayList<Integer> indexOfAbsenceDate = new ArrayList<>();
