@@ -150,7 +150,10 @@ public class Main {
         LocalDate earliestDate = findEarliestDate(dates);
         System.out.println("The range of absence dates is from " + earliestDate + " to " + latestDate + ", or " + calculateNumDaysSince(latestDate, earliestDate) + " days.");
 
-        // TODO What are the indexes of the students who have [X] absence date
+        // What are the indexes of the students who have [X] absence date
+        LocalDate xAbsenceDate = LocalDate.of(2018, 02, 02);
+        ArrayList<Integer> indexOfInputDate = findIndexAbsenceDate(dates, xAbsenceDate);
+        System.out.println("The indexes of the students who were absent on " + xAbsenceDate + " are " + indexOfInputDate);
 
         // TODO What are the the indexes of the students who have the same absence date?
 
@@ -159,6 +162,16 @@ public class Main {
 
 
 }
+
+    private static ArrayList<Integer> findIndexAbsenceDate(ArrayList<LocalDate> dates, LocalDate dateToCheck) {
+        ArrayList<Integer> indexOfAbsenceDate = new ArrayList<>();
+        for (int i = 0; i < dates.size(); i++) {
+            if (dates.get(i) == dateToCheck){
+                indexOfAbsenceDate.add(i);
+            }
+        }
+        return indexOfAbsenceDate;
+    }
 
     private static LocalDate findEarliestDate(ArrayList<LocalDate> dates) {
         LocalDate today = LocalDate.now();
@@ -202,19 +215,24 @@ public class Main {
     }
 
     private static Set<String> findStudentsMinAbsences(ArrayList<Integer> absences, ArrayList<String> students) {
-        int min = 15;
+        int min = findMinAbsences(absences);
         Set<String> studentsMin = new HashSet<>();
-        for (Integer absence : absences){
-            if (absence < min){
-                min = absence;
-            }
-        }
         for (int i = 0; i < absences.size(); i++){
             if (absences.get(i) == min){
                 studentsMin.add(students.get(i));
             }
         }
         return studentsMin;
+    }
+
+    private static int findMinAbsences(ArrayList<Integer> absences) {
+        int min = absences.get(0);
+        for (Integer absence : absences) {
+            if (absence < min){
+                min = absence;
+            }
+        }
+        return min;
     }
 
     private static ArrayList<LocalDate> initializeDates(ArrayList<Integer> absences, LocalDate today) {
