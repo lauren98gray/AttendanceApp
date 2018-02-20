@@ -165,11 +165,6 @@ public class Main {
         System.out.println("Map of indices of absence dates: " + indexesSameAbsenceDate);
 
 
-
-
-
-
-
 }
 
 
@@ -233,18 +228,16 @@ public class Main {
     }
 
     //Function to find students who have the longest number of days since an absence
-    // Not sure if I have to use LocalDate.isAfter()
     private static Set<String> findStudentsLongestNumDaysSinceAbsence(ArrayList<LocalDate> dates, ArrayList<String> students) {
         Set<String> names = new HashSet<>();
-        LocalDate today = LocalDate.now();
-        long longestNumDays = 0;
+        LocalDate furthestDateBack = dates.get(0);
         for (LocalDate date : dates) {
-            if (calculateNumDaysSince(today, date) > longestNumDays) {
-                longestNumDays  = calculateNumDaysSince(today, date);
+            if (date.isBefore(furthestDateBack)){
+                furthestDateBack = date;
             }
         }
         for (int i = 0; i < students.size(); i++) {
-            if (calculateNumDaysSince(today, dates.get(i)) == longestNumDays) {
+            if (dates.get(i) == furthestDateBack){
                 names.add(students.get(i));
             }
         }
