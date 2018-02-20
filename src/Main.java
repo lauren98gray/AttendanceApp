@@ -160,13 +160,35 @@ public class Main {
         ArrayList<Integer> indexOfInputDate = findIndexAbsenceDate(dates, xAbsenceDate);
         System.out.println("The indexes of the students who were absent on " + xAbsenceDate + " are " + indexOfInputDate);
 
-        // TODO What are the the indexes of the students who have the same absence date?
+        // What are the the indexes of the students who have the same absence date?
+        Map<LocalDate, ArrayList<Integer>> indexesSameAbsenceDate = findIndexSameAbsenceDate(dates);
+        System.out.println("Map of indices of absence dates: " + indexesSameAbsenceDate);
+
+
 
 
 
 
 
 }
+
+
+    private static Map<LocalDate, ArrayList<Integer>> findIndexSameAbsenceDate(ArrayList<LocalDate> dates) {
+        Map<LocalDate, ArrayList<Integer>> sameDates = new HashMap<>();
+        for (int i = 0; i < dates.size(); i++) {
+            if (!sameDates.containsKey(dates.get(i))){
+                ArrayList<Integer> indexes = new ArrayList<>();
+                indexes.add(i);
+                sameDates.put(dates.get(i), indexes);
+            }
+            else {
+                ArrayList<Integer> updatedList = sameDates.get(dates.get(i));
+                updatedList.add(i);
+                sameDates.put(dates.get(i), updatedList);
+            }
+        }
+        return sameDates;
+    }
 
     private static ArrayList<Integer> findCoursesThatNameFE(ArrayList<String> students, ArrayList<Integer> indexFE, String name) {
         ArrayList<Integer> indexNameFE = new ArrayList<>();
